@@ -8,12 +8,12 @@
 
   <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
   <project remote="yocto" name="poky" path="sources/poky"/>
-  <project remote="yocto" name="meta-fsl-arm" path="sources/meta-raspberrypi"/>
+  <project remote="yocto" name="meta-raspberrypi" path="sources/meta-raspberrypi"/>
 
   <remote fetch="https://github.com/jumpnow" name="rpi"/>
-  <project remote="rpi" name="meta-rpi.git" path="sources/meta-rpi.git"/>
+  <project remote="rpi" name="meta-rpi" path="sources/meta-rpi.git"/>
 
   <remote fetch="https://github.com/meta-qt5" name="qt5"/>
-  <project remote="qt5" name="meta-qt5.git" path="sources/meta-qt5.git"/>
+  <project remote="qt5" name="meta-qt5" path="sources/meta-qt5.git"/>
 
 </manifest>
