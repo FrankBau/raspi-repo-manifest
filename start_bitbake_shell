@@ -1,0 +1,144 @@
+#! /bin/bash
+
+do_copy_bblayers()
+{
+cat <<EOF > $BBLAYERS_CONF
+# POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+POKY_BBLAYERS_CONF_VERSION = "2"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BBLAYERS ?= " \\
+   ${BSPDIR}/sources/meta \\
+   ${BSPDIR}/sources/meta-poky \\
+   ${BSPDIR}/sources/meta-openembedded/meta-oe \\
+   ${BSPDIR}/sources/meta-openembedded/meta-multimedia \\
+   ${BSPDIR}/sources/meta-openembedded/meta-networking \\
+   ${BSPDIR}/sources/meta-openembedded/meta-python \\
+   ${BSPDIR}/sources/meta-qt5 \\
+   ${BSPDIR}/sources/meta-raspberrypi \\
+   ${BSPDIR}/sources/meta-rpi \\
+"
+EOF
+}
+
+do_copy_local()
+{
+cat <<EOF > $LOCAL_CONF
+# Local configuration for meta-rpi images
+# Yocto Project 2.2 Poky distribution [morty] branch
+# This is a sysvinit system
+
+LICENSE_FLAGS_WHITELIST = "commercial"
+
+DISTRO_FEATURES = "ext2 pam opengl usbhost ${DISTRO_FEATURES_LIBC}"
+
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio"
+
+PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
+PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
+
+PREFERRED_PROVIDER_udev = "eudev"
+VIRTUAL_RUNTIME_init_manager = "sysvinit"
+
+MACHINE_FEATURES_remove = "apm"
+
+IMAGE_FSTYPES = "tar.xz"
+
+PREFERRED_VERSION_linux-raspberrypi = "4.4.%"
+
+MACHINE = "raspberrypi3"
+
+#DL_DIR = "${HOME}/oe-sources"
+
+#SSTATE_DIR = "/oe6/rpi/sstate-cache"
+
+#TMPDIR = "/oe6/rpi/tmp-morty"
+
+DISTRO = "poky"
+
+PACKAGE_CLASSES = "package_ipk"
+
+DISABLE_OVERSCAN = "1"
+DISPMANX_OFFLINE = "1"
+#FBL: ENABLE_UART = "1"
+#FBL: ENABLE_RPI3_SERIAL_CONSOLE = "1"
+
+# i686 or x86_64
+SDKMACHINE = "x86_64"
+
+EXTRA_IMAGE_FEATURES = "debug-tweaks"
+
+USER_CLASSES = "image-mklibs image-prelink"
+
+PATCHRESOLVE = "noop"
+
+RM_OLD_IMAGE = "1"
+
+CONF_VERSION = "1"
+########### see http://git.yoctoproject.org/cgit/cgit.cgi/meta-raspberrypi/tree/README
+
+GPU_MEM = "128"
+VIDEO_CAMERA = "1"
+ENABLE_SPI_BUS = "1"
+ENABLE_I2C = "1"
+DISTRO_FEATURES_remove += " x11 wayland"
+IMAGE_INSTALL_append += " cpufrequtils htop strace perf"
+IMAGE_INSTALL_append += " packagegroup-rpi-test"
+IMAGE_INSTALL_append += " gstreamer1.0-omx bluez5 lighttpd php"
+IMAGE_INSTALL_append += " hostapd dnsmasq iptables rfkill"
+IMAGE_INSTALL_append += " v4l-utils yavta"
+
+EOF
+}
+
+while : ; do 
+
+  echo ""
+  echo "setiup bitbake environment"
+  echo ""
+
+  BSPDIR=$(pwd)
+
+  if [ ! -e "sources/" ]
+  then
+    echo "script not started from top-level folder (BSPDIR), exit"
+    break 
+  fi
+
+  if [ -z "$1" ]
+  then
+    echo "build folder not specified, exit."
+    break
+  fi
+
+  BBLAYERS_CONF=$1/conf/bblayers.conf
+
+  if [ -e "$BBLAYERS_CONF" ]
+  then
+    echo "$BBLAYERS_CONF already exists, not touched"
+  else
+    do_copy_bblayers
+  fi
+
+  LOCAL_CONF=$1/conf/local.conf
+
+  if [ -e "$LOCAL_CONF" ]
+  then
+    echo "$LOCAL_CONF already exists, not touched"
+  else
+    do_copy_local
+  fi
+
+  source sources/oe-init-build-env $1
+  
+  echo "  setup done. Next, you might want to"
+  echo ""
+  echo "    bitbake console-image"
+  echo ""
+  break
+
+done
+
