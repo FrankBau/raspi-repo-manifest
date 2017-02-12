@@ -7,13 +7,17 @@
   <project remote="oe" name="meta-openembedded" path="sources/meta-openembedded"/>
 
   <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
-  <project remote="yocto" name="poky" path="sources/poky"/>
+  <project remote="yocto" name="poky" path="sources"/>
   <project remote="yocto" name="meta-raspberrypi" path="sources/meta-raspberrypi"/>
 
-  <remote fetch="https://github.com/jumpnow" name="rpi"/>
-  <project remote="rpi" name="meta-rpi" path="sources/meta-rpi.git"/>
-
   <remote fetch="https://github.com/meta-qt5" name="qt5"/>
-  <project remote="qt5" name="meta-qt5" path="sources/meta-qt5.git"/>
+  <project remote="qt5" name="meta-qt5" path="sources/meta-qt5"/>
+
+  <remote fetch="https://github.com/frankbau" name="frankbau"/>
+  <project remote="frankbau" name="meta-rpi" path="sources/meta-rpi"/>
+  <project remote="frankbau" name="raspi-repo-manifest" path="sources/raspi-repo-manifest">
+    <copyfile dest="../start_bitbake_shell" src="start_bitbake_shell"/>
+  </project>
 
 </manifest>
+

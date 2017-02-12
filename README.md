@@ -13,7 +13,7 @@ Create a new empty folder, say `raspi`, on your Linux build host
 
     mkdir raspi
     cd raspi
-    repo init -u https://github.com/FrankBau/raspi-repo-manifest
+    repo init -u https://github.com/FrankBau/raspi-repo-manifest -b morty
     repo sync
 
 ## Further Reading
