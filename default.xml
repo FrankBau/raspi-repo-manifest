@@ -15,9 +15,6 @@
 
   <remote fetch="https://github.com/frankbau" name="frankbau"/>
   <project remote="frankbau" name="meta-rpi" path="sources/meta-rpi"/>
-  <project remote="frankbau" name="raspi-repo-manifest" path="sources/raspi-repo-manifest">
-    <copyfile dest="start_bitbake_shell" src="start_bitbake_shell"/>
-  </project>
 
 </manifest>
 

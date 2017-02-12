@@ -15,6 +15,12 @@ Create a new empty folder, say `raspi`, on your Linux build host
     cd raspi
     repo init -u https://github.com/FrankBau/raspi-repo-manifest -b morty
     repo sync
+    TEMPLATECONF=meta-rpi/conf source sources/oe-init-build-env build 
+
+This creates a build folder and a conf subfolder with some configuration files.
+Review the configuration files and then, from the build folder, issue the first bitbake command:
+
+    bitbake console-image
 
 ## Further Reading
 * Jumpnow Technologies blog: http://www.jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html
