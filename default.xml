@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 
-  <default sync-j="4" revision="morty"/>
+  <default sync-j="4" revision="pyro"/>
 
   <remote fetch="https://github.com/openembedded" name="oe"/>
   <project remote="oe" name="meta-openembedded" path="sources/meta-openembedded"/>
