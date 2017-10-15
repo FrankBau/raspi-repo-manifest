@@ -10,7 +10,7 @@
   <project remote="yocto" name="poky" path="sources"/>
   <project remote="yocto" name="meta-raspberrypi" path="sources/meta-raspberrypi"/>
 
-  <remote fetch="git://code.qt.io/yocto/meta-qt5.git" name="qt5" revision="5.9" />
+  <remote fetch="git://code.qt.io/yocto" name="qt5" revision="5.9" />
   <project remote="qt5" name="meta-qt5" path="sources/meta-qt5"/>
 
   <remote fetch="https://github.com/frankbau" name="frankbau"/>
